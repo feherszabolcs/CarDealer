@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import model.VehicleUtil.Category;
 
@@ -10,11 +10,11 @@ public class Vehicle {
     private Category category;
     private int price;
     private String description;
-    private Date manufactureDate;
+    private LocalDate manufactureDate;
     private double power;
 
     public Vehicle(int id, String brand, Category category, int price, String description,
-            Date manufactureDate, double power) {
+            LocalDate manufactureDate, double power) {
         this.brand = brand;
         this.id = id;
         this.category = category;
@@ -41,7 +41,7 @@ public class Vehicle {
         return description;
     }
 
-    public Date getManufactureDate() {
+    public LocalDate getManufactureDate() {
         return manufactureDate;
     }
 
