@@ -2,14 +2,19 @@ package views;
 
 import java.io.File;
 import java.io.IOException;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.plaf.DimensionUIResource;
 
+import components.button.NavButton;
 import controllers.VehicleData;
 
 public class MainFrame extends JFrame {
@@ -32,6 +37,21 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setTitle("CD - CarDealer");
 
+        JPanel navPanel = new JPanel(new FlowLayout(1, 35, 8));
+        NavButton tableViewButton = new NavButton("Tableview", true);
+        NavButton addButton = new NavButton("Add vehicle");
+        NavButton[] navButtons = { tableViewButton, addButton };
+        for (NavButton navButton : navButtons) {
+            navButton.addActionListener(e -> {
+                for (NavButton btn : navButtons)
+                    btn.setActive(false);
+                navButton.setActive(true);
+            });
+        }
+        navPanel.add(tableViewButton);
+        navPanel.add(addButton);
+        navPanel.setBackground(Color.GRAY);
+        add(navPanel, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
