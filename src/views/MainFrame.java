@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
@@ -14,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.plaf.DimensionUIResource;
 
 import components.button.NavButton;
 import controllers.VehicleData;
@@ -22,6 +22,8 @@ import controllers.VehicleData;
 public class MainFrame extends JFrame {
 
     private VehicleData data;
+    NavButton tableViewButton = new NavButton("Tableview", true);
+    NavButton addButton = new NavButton("Add vehicle");
 
     private void setIcon() {
         try {
@@ -35,13 +37,11 @@ public class MainFrame extends JFrame {
     private void initFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800, 600);
-        setMinimumSize(new DimensionUIResource(800, 600));
+        setMinimumSize(new Dimension(800, 600));
         setLocationRelativeTo(null);
         setTitle("CD - CarDealer");
 
         JPanel navPanel = new JPanel(new FlowLayout(1, 35, 8));
-        NavButton tableViewButton = new NavButton("Tableview", true);
-        NavButton addButton = new NavButton("Add vehicle");
         NavButton[] navButtons = { tableViewButton, addButton };
         for (NavButton navButton : navButtons) {
             navButton.addActionListener(e -> {
@@ -50,6 +50,12 @@ public class MainFrame extends JFrame {
                 navButton.setActive(true);
             });
         }
+
+        addButton.addActionListener(e -> {
+            AddFrame addFrame = new AddFrame();
+            addFrame.setVisible(true);
+        });
+
         navPanel.add(tableViewButton);
         navPanel.add(addButton);
         navPanel.setBackground(Color.GRAY);
