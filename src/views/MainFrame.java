@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.plaf.DimensionUIResource;
 
 import components.button.NavButton;
@@ -51,6 +53,13 @@ public class MainFrame extends JFrame {
         navPanel.add(tableViewButton);
         navPanel.add(addButton);
         navPanel.setBackground(Color.GRAY);
+
+        JTable table = new JTable(data);
+        table.setAutoCreateRowSorter(true);
+        table.setFillsViewportHeight(true);
+        JScrollPane scroll = new JScrollPane(table);
+
+        add(scroll);
         add(navPanel, BorderLayout.SOUTH);
         addWindowListener(new WindowAdapter() {
             @Override

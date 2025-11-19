@@ -1,0 +1,13 @@
+[
+  {
+    "vehicle": {
+      "price": 12000,
+      "description": "Such a nice car!:)",
+      "manufactureDate": "2018-11-01",
+      "id": 0,
+      "power": 89,
+      "category": "CAR",
+      "brand": "Ford"
+    }
+  }
+]

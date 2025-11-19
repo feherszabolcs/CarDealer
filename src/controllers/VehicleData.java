@@ -5,13 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.table.AbstractTableModel;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Vehicle;
 import model.VehicleUtil.Category;
 
-public class VehicleData {
+public class VehicleData extends AbstractTableModel {
     public List<Vehicle> vehicles = new ArrayList<>();
 
     public void JSonReader() {
@@ -56,5 +58,57 @@ public class VehicleData {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public int getRowCount() {
+        return vehicles.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 7;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Vehicle v = vehicles.get(rowIndex);
+        switch (columnIndex) {
+            case 0:
+                return v.getId();
+            case 1:
+                return v.getBrand();
+            case 2:
+                return v.getCategory();
+            case 3:
+                return v.getPrice();
+            case 4:
+                return v.getDescription();
+            case 5:
+                return v.getManufactureDate();
+            default:
+                return v.getPower();
+        }
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        switch (column) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Brand";
+            case 2:
+                return "Category";
+            case 3:
+                return "Price";
+            case 4:
+                return "Description";
+            case 5:
+                return "Manufacture date";
+            default:
+                return "Power (kW)";
+        }
+
     }
 }
