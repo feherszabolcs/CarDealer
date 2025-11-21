@@ -16,4 +16,11 @@ public class InputLabel extends JLabel {
         setText(text);
         initComponent();
     }
+
+    public InputLabel(String text, int horizontalAlignment) {
+        super();
+        setText(text);
+        setHorizontalAlignment(horizontalAlignment);
+        initComponent();
+    }
 }

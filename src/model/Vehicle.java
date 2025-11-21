@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-import model.VehicleUtil.Category;
+import utils.VehicleUtil.Category;
 
 public class Vehicle {
     private int id;

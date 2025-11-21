@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Vehicle;
-import model.VehicleUtil.Category;
+import utils.VehicleUtil.Category;
 
 public class VehicleData extends AbstractTableModel {
     public List<Vehicle> vehicles = new ArrayList<>();

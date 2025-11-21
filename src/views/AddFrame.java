@@ -2,7 +2,6 @@ package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,13 +11,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+
+import utils.SpringUtilities;
 
 import components.label.InputLabel;
 import components.textfield.InputField;
 
 public class AddFrame extends JFrame {
-
-
 
     private void init() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -27,12 +28,17 @@ public class AddFrame extends JFrame {
         setMinimumSize(new Dimension(500, 400));
         setLocationRelativeTo(this);
 
-        JPanel idPanel = new JPanel(new FlowLayout(1, 20, 10));
-        idPanel.setBackground(Color.GRAY);
-        InputField idInput = new InputField();
-        InputLabel idLabel = new InputLabel("ID: ");
-        idPanel.add(idLabel);
-        idPanel.add(idInput);
+        JPanel mainPanel = new JPanel(new SpringLayout());
+        mainPanel.setBackground(Color.GRAY);
+        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture date", "Power" };
+
+        for (int i = 0; i < labels.length; i++) {
+            InputLabel il = new InputLabel(labels[i] + ": ", SwingConstants.LEADING);
+            mainPanel.add(il);
+            InputField iField = new InputField();
+            il.setLabelFor(iField);
+            mainPanel.add(iField);
+        }
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -42,7 +48,11 @@ public class AddFrame extends JFrame {
             }
         });
 
-        add(idPanel);
+        add(mainPanel);
+        SpringUtilities.makeCompactGrid(mainPanel,
+                labels.length, 2,
+                6, 6,
+                55, 6);
     }
 
     private void setIcon() {

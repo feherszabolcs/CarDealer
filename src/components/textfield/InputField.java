@@ -9,7 +9,8 @@ import javax.swing.JTextField;
 public class InputField extends JTextField {
 
     private void initComponent() {
-        setColumns(25);
+        setColumns(20);
+        setSize(100, HEIGHT);
         setFont(new Font("Tahoma", Font.BOLD, 14));
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         setBackground(Color.gray);
