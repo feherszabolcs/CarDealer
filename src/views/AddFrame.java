@@ -1,12 +1,16 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -15,7 +19,9 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 import utils.SpringUtilities;
-
+import utils.VehicleUtil;
+import components.button.Button;
+import components.dropdown.DropDown;
 import components.label.InputLabel;
 import components.textfield.InputField;
 
@@ -30,15 +36,36 @@ public class AddFrame extends JFrame {
 
         JPanel mainPanel = new JPanel(new SpringLayout());
         mainPanel.setBackground(Color.GRAY);
-        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture date", "Power" };
+        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture year", "Power" };
+
+        Integer[] years = new Integer[100];
+        Arrays.setAll(years, g -> LocalDate.now().getYear() - g);
+
+        InputField idField = new InputField();
+        InputField brandField = new InputField();
+        DropDown<VehicleUtil.Category> categoryDropdown = new DropDown<>(VehicleUtil.Category.values());
+        InputField priceField = new InputField();
+        InputField descriptionField = new InputField();
+        DropDown<Integer> dateDropdown = new DropDown<>(years);
+        InputField powerField = new InputField();
+        Component[] fields = { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
+                powerField };
 
         for (int i = 0; i < labels.length; i++) {
             InputLabel il = new InputLabel(labels[i] + ": ", SwingConstants.LEADING);
             mainPanel.add(il);
-            InputField iField = new InputField();
-            il.setLabelFor(iField);
-            mainPanel.add(iField);
+            il.setLabelFor(fields[i]);
+            mainPanel.add(fields[i]);
         }
+        Button submitButton = new Button("Confirm");
+        JPanel submitPanel = new JPanel();
+        submitPanel.add(submitButton);
+        submitPanel.setBackground(Color.GRAY);
+        add(submitPanel, BorderLayout.SOUTH);
+        submitButton.addChangeListener(e -> {
+            boolean hover = submitButton.isRolloverEnabled();
+            submitButton.setBorderPainted(hover);
+        });
 
         addWindowListener(new WindowAdapter() {
             @Override
