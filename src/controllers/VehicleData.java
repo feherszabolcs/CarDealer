@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.FileWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class VehicleData extends AbstractTableModel {
                         Category.valueOf(jsonObject.getString("category")),
                         jsonObject.getInt("price"),
                         jsonObject.getString("description"),
-                        LocalDate.parse(jsonObject.getString("manufactureDate")),
+                        jsonObject.getInt("manufactureDate"),
                         jsonObject.getDouble("power"));
                 vehicles.add(v);
             }
