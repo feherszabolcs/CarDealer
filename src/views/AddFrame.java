@@ -93,11 +93,34 @@ public class AddFrame extends JFrame {
     }
 
     private void handleSubmit() {
-        for (Component comp : fields) {
-            if (!validateFields(comp)) {
-                JOptionPane.showMessageDialog(null, "Egy, vagy több hibás adat", "Hiba!", JOptionPane.ERROR_MESSAGE);
+        for (int i = 0; i < fields.length; i++) {
+            if (!validateEmptyFields(fields[i])) {
+                JOptionPane.showMessageDialog(null, "Egy, vagy több hibás adat!", "Hiba!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (!(fields[i] instanceof InputField)) {
+                continue;
+            }
+            InputField tf = (InputField) fields[i];
+
+            // checks if the textfields are filled correctly with specified values
+
+            if ((i == 0 || i == 3) && !validateFieldValue(tf, "num")) {
+                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott érték nem egész szám!", "Hiba!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (i == 0 && VehicleUtil.isIdUnique(Integer.parseInt(idField.getText()), MainFrame.data.vehicles)) {
+                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott ID nem egyedi!", "Hiba!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (i == 6 && !validateFieldValue(tf, "double")) {
+                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott érték nem valós szám!", "Hiba!",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
         }
         Vehicle vehicle = new Vehicle(Integer.parseInt(idField.getText()), brandField.getText(),
                 (Category) categoryDropdown.getSelectedItem(), Integer.parseInt(priceField.getText()),
@@ -106,13 +129,14 @@ public class AddFrame extends JFrame {
 
         MainFrame.data.vehicles.add(vehicle);
         MainFrame.data.fireTableDataChanged();
-        JOptionPane.showMessageDialog(null, "Új autó sikeresen felvéve!", "Siker!", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Az új jármű sikeresen felvéve!", "Siker!",
+                JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
         MainFrame.tableViewButton.setActive(true);
         MainFrame.addButton.setActive(false);
     }
 
-    private boolean validateFields(Component comp) {
+    private boolean validateEmptyFields(Component comp) {
 
         // first checks if the component textvalue is empty or null
         if (comp instanceof InputField ifield && ifield.getText().isEmpty()) {
@@ -124,11 +148,14 @@ public class AddFrame extends JFrame {
             return false; // technically not possible
         }
 
-        // then checks if the component textvalue is numeric
-        if (comp instanceof InputField ifield && !ifield.getText().matches("\\d+")) {
-            System.out.println("[HIBA!! ] " + ifield.getText());
-            return false;
-        }
+        return true;
+    }
+
+    private boolean validateFieldValue(InputField field, String type) {
+        if (type.equals("num"))
+            return ((field.getText()).matches("\\d+"));
+        else if (type.equals("double"))
+            return ((field.getText()).matches("\\d+(\\.\\d+)?"));
 
         return true;
     }
