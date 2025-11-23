@@ -14,18 +14,30 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 import utils.SpringUtilities;
 import utils.VehicleUtil;
+import utils.VehicleUtil.Category;
 import components.button.Button;
 import components.dropdown.DropDown;
 import components.label.InputLabel;
 import components.textfield.InputField;
+import model.Vehicle;
 
 public class AddFrame extends JFrame {
+
+    InputField idField = new InputField();
+    InputField brandField = new InputField();
+    DropDown<VehicleUtil.Category> categoryDropdown = new DropDown<>(VehicleUtil.Category.values());
+    InputField priceField = new InputField();
+    InputField descriptionField = new InputField();
+    DropDown<Integer> dateDropdown;
+    InputField powerField = new InputField();
+    Component[] fields;
 
     private void init() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -41,14 +53,8 @@ public class AddFrame extends JFrame {
         Integer[] years = new Integer[100];
         Arrays.setAll(years, g -> LocalDate.now().getYear() - g);
 
-        InputField idField = new InputField();
-        InputField brandField = new InputField();
-        DropDown<VehicleUtil.Category> categoryDropdown = new DropDown<>(VehicleUtil.Category.values());
-        InputField priceField = new InputField();
-        InputField descriptionField = new InputField();
-        DropDown<Integer> dateDropdown = new DropDown<>(years);
-        InputField powerField = new InputField();
-        Component[] fields = { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
+        dateDropdown = new DropDown<>(years);
+        fields = new Component[] { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
                 powerField };
 
         for (int i = 0; i < labels.length; i++) {
@@ -57,16 +63,20 @@ public class AddFrame extends JFrame {
             il.setLabelFor(fields[i]);
             mainPanel.add(fields[i]);
         }
-        Button submitButton = new Button("Confirm");
+
         JPanel submitPanel = new JPanel();
-        submitPanel.add(submitButton);
-        submitPanel.setBackground(Color.GRAY);
-        add(submitPanel, BorderLayout.SOUTH);
+        Button submitButton = new Button("Confirm");
+
         submitButton.addChangeListener(e -> {
             boolean hover = submitButton.isRolloverEnabled();
             submitButton.setBorderPainted(hover);
         });
 
+        submitPanel.add(submitButton);
+        submitPanel.setBackground(Color.GRAY);
+        add(submitPanel, BorderLayout.SOUTH);
+
+        submitButton.addActionListener(e -> handleSubmit());
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -80,6 +90,38 @@ public class AddFrame extends JFrame {
                 labels.length, 2,
                 6, 6,
                 55, 6);
+    }
+
+    private void handleSubmit() {
+        for (Component comp : fields) {
+            if (!validateFields(comp)) {
+                JOptionPane.showMessageDialog(null, "Egy, vagy több hibás adat", "Hiba!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        Vehicle vehicle = new Vehicle(Integer.parseInt(idField.getText()), brandField.getText(),
+                (Category) categoryDropdown.getSelectedItem(), Integer.parseInt(priceField.getText()),
+                descriptionField.getText(),
+                (Integer) dateDropdown.getSelectedItem(), Double.parseDouble(powerField.getText()));
+
+        MainFrame.data.vehicles.add(vehicle);
+        MainFrame.data.fireTableDataChanged();
+        JOptionPane.showMessageDialog(null, "Új autó sikeresen felvéve!", "Siker!", JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
+        MainFrame.tableViewButton.setActive(true);
+        MainFrame.addButton.setActive(false);
+    }
+
+    private boolean validateFields(Component comp) {
+        if (comp instanceof InputField ifield && ifield.getText().isEmpty()) {
+            System.out.println("HIBA!!  " + ifield.getText());
+            return false;
+        }
+        if (comp instanceof DropDown<?> ddown && ddown.getSelectedItem() == null) {
+            System.out.println("HIBA!!  " + ddown.getSelectedItem());
+            return false; // technically not possible
+        }
+        return true;
     }
 
     private void setIcon() {

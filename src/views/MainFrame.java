@@ -21,7 +21,7 @@ import controllers.VehicleData;
 
 public class MainFrame extends JFrame {
 
-    private VehicleData data;
+    static VehicleData data;
     static NavButton tableViewButton = new NavButton("Tableview", true);
     static NavButton addButton = new NavButton("Add vehicle");
 
