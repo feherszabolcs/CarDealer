@@ -113,14 +113,23 @@ public class AddFrame extends JFrame {
     }
 
     private boolean validateFields(Component comp) {
+
+        // first checks if the component textvalue is empty or null
         if (comp instanceof InputField ifield && ifield.getText().isEmpty()) {
-            System.out.println("HIBA!!  " + ifield.getText());
+            System.out.println("[HIBA!! ] " + ifield.getText());
             return false;
         }
         if (comp instanceof DropDown<?> ddown && ddown.getSelectedItem() == null) {
-            System.out.println("HIBA!!  " + ddown.getSelectedItem());
+            System.out.println("[HIBA!! ] " + ddown.getSelectedItem());
             return false; // technically not possible
         }
+
+        // then checks if the component textvalue is numeric
+        if (comp instanceof InputField ifield && !ifield.getText().matches("\\d+")) {
+            System.out.println("[HIBA!! ] " + ifield.getText());
+            return false;
+        }
+
         return true;
     }
 
