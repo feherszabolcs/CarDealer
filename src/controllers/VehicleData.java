@@ -110,4 +110,41 @@ public class VehicleData extends AbstractTableModel {
         }
 
     }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        if (columnIndex == 3 || columnIndex == 4)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Vehicle v = vehicles.get(rowIndex);
+        switch (columnIndex) {
+            case 0:
+                v.setId((Integer) aValue);
+                break;
+            case 1:
+                v.setBrand((String) aValue);
+                break;
+            case 2:
+                v.setCategory((Category) aValue);
+                break;
+            case 3:
+                v.setPrice((Integer) aValue);
+                break;
+            case 4:
+                v.setDescription((String) aValue);
+                break;
+            case 5:
+                v.setManufactureDate((Integer) aValue);
+                break;
+            case 6:
+                v.setPower((Double) aValue);
+                break;
+            default:
+                break;
+        }
+    }
 }

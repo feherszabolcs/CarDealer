@@ -59,4 +59,24 @@ public class Vehicle {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setManufactureDate(int manufactureDate) {
+        this.manufactureDate = manufactureDate;
+    }
+
+    public void setPower(double power) {
+        this.power = power;
+    }
 }

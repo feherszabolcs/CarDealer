@@ -19,7 +19,6 @@ public class InputField extends JTextField {
         setForeground(Color.black);
         this.putClientProperty(FlatClientProperties.STYLE,
                 "showClearButton: true");
-
     }
 
     public InputField() {
