@@ -6,6 +6,8 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 public class InputField extends JTextField {
 
     private void initComponent() {
@@ -15,6 +17,9 @@ public class InputField extends JTextField {
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         setBackground(Color.gray);
         setForeground(Color.black);
+        this.putClientProperty(FlatClientProperties.STYLE,
+                "showClearButton: true");
+
     }
 
     public InputField() {

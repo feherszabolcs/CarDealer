@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import utils.SpringUtilities;
 import utils.VehicleUtil;
 import utils.VehicleUtil.Category;
@@ -54,6 +56,8 @@ public class AddFrame extends JFrame {
         Arrays.setAll(years, g -> LocalDate.now().getYear() - g);
 
         dateDropdown = new DropDown<>(years);
+
+        dateDropdown.putClientProperty(FlatClientProperties.STYLE_CLASS, "main");
         fields = new Component[] { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
                 powerField };
 
