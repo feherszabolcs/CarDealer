@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
-
+/**
+ *
+ * Custom component for an easy button
+ *
+ */
 public class Button extends JButton {
 
     private void initComponent() {

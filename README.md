@@ -11,10 +11,12 @@ A structure of the project is looking like:
     - `button`
     - `textfield`
     - `label`
+    - `dropdown`
   - `model`: location of the main Vehicle model and related utilities
   - `controllers`: location of the controllers, backend logic
   - `views`: location of the views
-- `lib`: the folder to maintain dependencies
+  - `resources`: UI designs related to FlatLaf
+- `lib`: the folder to maintain dependencies, and other recources (json, imgs)
 
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 

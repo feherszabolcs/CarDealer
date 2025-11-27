@@ -7,6 +7,9 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+/**
+ * Custom ComboBox, the class can work with any kind of generic types.
+ */ 
 public class DropDown<E> extends JComboBox<E> {
     private void initComponent() {
         setBackground(Color.gray);

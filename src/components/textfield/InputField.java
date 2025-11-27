@@ -8,6 +8,10 @@ import javax.swing.JTextField;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+/**
+ * A custom made input field used in forms.
+ */
+
 public class InputField extends JTextField {
 
     private void initComponent() {
@@ -17,6 +21,8 @@ public class InputField extends JTextField {
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         setBackground(Color.gray);
         setForeground(Color.black);
+
+        // A property from flatlaf, although it is not visible that much (couldn't find a way to overwrite color)
         this.putClientProperty(FlatClientProperties.STYLE,
                 "showClearButton: true");
     }

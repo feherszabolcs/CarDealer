@@ -5,10 +5,18 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
+/**
+ *
+ * Custom buttons used in navigation bar.
+ *
+ */
 public class NavButton extends JButton {
 
     private boolean isActive = false;
 
+    /*
+     * Setting basic properties, including a property based fg color
+     */
     private void initComponent() {
         setFont(new Font("Tahoma", Font.BOLD, 16));
         setFocusPainted(false);

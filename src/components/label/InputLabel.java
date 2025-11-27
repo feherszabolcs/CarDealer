@@ -5,6 +5,9 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 
+/**
+ * Custom component for input labels used in forms. Always connect to a textfield
+ */ 
 public class InputLabel extends JLabel {
     private void initComponent() {
         setFont(new Font("Tahoma", Font.BOLD, 14));
