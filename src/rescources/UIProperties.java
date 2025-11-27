@@ -28,5 +28,7 @@ public class UIProperties {
         UIManager.put("TextField.showClearButton", true);
         UIManager.put("TextField.arc", 0);
 
+        UIManager.put("Button.hoverForeground", Color.BLUE);
+
     }
 }

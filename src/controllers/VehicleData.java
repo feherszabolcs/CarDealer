@@ -147,4 +147,9 @@ public class VehicleData extends AbstractTableModel {
                 break;
         }
     }
+
+    public void remove(Vehicle v) {
+        vehicles.remove(v);
+        fireTableDataChanged();
+    }
 }
