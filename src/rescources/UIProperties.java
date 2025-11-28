@@ -10,6 +10,10 @@ public class UIProperties {
     private UIProperties() {
     }
 
+    /**
+     * Loads the properties for the UI.
+     * Added with FlatLaf, the keys can be found in the flatlaf docs, these can have any valid values.
+     */
     public static void loadUI() {
         UIManager.put("ScrollBar.trackArc", 999);
         UIManager.put("ScrollBar.thumbArc", 999);

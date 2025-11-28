@@ -5,8 +5,9 @@ import views.MainFrame;
 
 public class App {
     public static void main(String[] args) {
-        FlatLightLaf.setup();
 
+        //Loading FlatLaf UI
+        FlatLightLaf.setup();
         UIProperties.loadUI();
 
         MainFrame mf = new MainFrame();

@@ -15,6 +15,18 @@ import utils.VehicleUtil.Category;
 public class VehicleData extends AbstractTableModel {
     public List<Vehicle> vehicles = new ArrayList<>();
 
+    /*
+     * Method to read from a json file and store the information in a list of
+     * objects (Vehicles).
+     * The method will be called when the application starts.
+     *
+     * @param None
+     * 
+     * @throws Exception - If the json is corrupted, or the format doesn't match the
+     * expected structure
+     * 
+     * @return None
+     */
     public void JSonReader() {
         try {
             String content = new String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get("lib/vehicles.json")));
@@ -36,6 +48,17 @@ public class VehicleData extends AbstractTableModel {
         }
     }
 
+    /*
+     * Method to write into a json file the data stored in the list of Vehicles.
+     * This method will be called every time we close the application.
+     *
+     * @param vehicles - list of Vehicles that need to be written into the json
+     * file.
+     * 
+     * @throws Exception - If there are any problems with writing into the file.
+     *
+     * @return None
+     */
     public static void JSONWriter(List<Vehicle> vehicles) {
         JSONArray jsonArray = new JSONArray();
         for (Vehicle vehicle : vehicles) {
@@ -59,6 +82,11 @@ public class VehicleData extends AbstractTableModel {
         }
     }
 
+    /**
+     * Overridden methods from the AbstractTableModel.
+     * All of them used in the main table view since the this class is the one who
+     * provides the data for it.
+     */
     @Override
     public int getRowCount() {
         return vehicles.size();
@@ -148,6 +176,14 @@ public class VehicleData extends AbstractTableModel {
         }
     }
 
+    /*
+     * Method used to remove a Vehicle from the table. It also updates the view by
+     * calling the fireTableDataChanged method.
+     *
+     * @param v - Vehicle that needs to be removed from the table.
+     *
+     * @return None
+     */
     public void remove(Vehicle v) {
         vehicles.remove(v);
         fireTableDataChanged();
