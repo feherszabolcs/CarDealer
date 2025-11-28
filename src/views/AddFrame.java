@@ -132,6 +132,7 @@ public class AddFrame extends JFrame {
                 (Integer) dateDropdown.getSelectedItem(), Double.parseDouble(powerField.getText()));
 
         MainFrame.data.vehicles.add(vehicle);
+        MainFrame.data.originalVehicles.add(vehicle);
         MainFrame.data.fireTableDataChanged();
         JOptionPane.showMessageDialog(null, "Az új jármű sikeresen felvéve!", "Siker!",
                 JOptionPane.INFORMATION_MESSAGE);

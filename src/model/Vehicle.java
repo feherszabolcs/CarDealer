@@ -1,5 +1,6 @@
 package model;
 
+
 import utils.VehicleUtil.Category;
 
 public class Vehicle {

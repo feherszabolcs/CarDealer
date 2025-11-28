@@ -14,6 +14,7 @@ import utils.VehicleUtil.Category;
 
 public class VehicleData extends AbstractTableModel {
     public List<Vehicle> vehicles = new ArrayList<>();
+    public List<Vehicle> originalVehicles = new ArrayList<>(vehicles);
 
     /*
      * Method to read from a json file and store the information in a list of
@@ -42,6 +43,7 @@ public class VehicleData extends AbstractTableModel {
                         jsonObject.getInt("manufactureDate"),
                         jsonObject.getDouble("power"));
                 vehicles.add(v);
+                originalVehicles.add(v);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -53,7 +55,7 @@ public class VehicleData extends AbstractTableModel {
      * This method will be called every time we close the application.
      *
      * @param vehicles - list of Vehicles that need to be written into the json
-     * file.
+     * file. Always contains all Vehicles from the table.
      * 
      * @throws Exception - If there are any problems with writing into the file.
      *
@@ -117,6 +119,18 @@ public class VehicleData extends AbstractTableModel {
                 return v.getPower();
         }
     }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex == 0 || columnIndex == 3 || columnIndex == 5)
+            return Integer.class;
+        if (columnIndex == 2)
+            return Category.class;
+        if (columnIndex == 6)
+            return Double.class;
+        return String.class;
+    }
+
 
     @Override
     public String getColumnName(int column) {
@@ -186,6 +200,38 @@ public class VehicleData extends AbstractTableModel {
      */
     public void remove(Vehicle v) {
         vehicles.remove(v);
+        originalVehicles.remove(v);
         fireTableDataChanged();
+    }
+
+    public void searchByBrand(String value) {
+        if (!value.isBlank()) {
+            vehicles = originalVehicles.stream()
+                    .filter(r -> r.getBrand().toLowerCase().contains(value) || r.getBrand().startsWith(value))
+                    .toList();
+        } else
+            vehicles = originalVehicles;
+        fireTableDataChanged();
+    }
+
+    public void searchByCategory(String categoryName, String brandName) {
+        if (categoryName.equals("ALL")) {
+            vehicles = originalVehicles;
+            return;
+        }
+        List<Vehicle> temp = new ArrayList<>();
+        temp = originalVehicles.stream().filter(r -> r.getCategory().name().equals(categoryName)).toList();
+        if (!brandName.isBlank())
+            temp = temp.stream()
+                    .filter(r -> r.getBrand().toLowerCase().contains(brandName) || r.getBrand().startsWith(brandName))
+                    .toList();
+        else
+            temp = originalVehicles.stream().filter(r -> r.getCategory().name().equals(categoryName)).toList();
+        vehicles = temp;
+        fireTableDataChanged();
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 }
