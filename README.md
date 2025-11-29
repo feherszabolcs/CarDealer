@@ -16,6 +16,7 @@ A structure of the project is looking like:
   - `controllers`: location of the controllers, backend logic
   - `views`: location of the views
   - `resources`: UI designs related to FlatLaf
+  - `tests`: the folder to maintain tests
 - `lib`: the folder to maintain dependencies, and other recources (json, imgs)
 
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.

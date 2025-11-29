@@ -114,7 +114,7 @@ public class AddFrame extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (i == 0 && VehicleUtil.isIdUnique(Integer.parseInt(idField.getText()), MainFrame.data.vehicles)) {
+            if (i == 0 && VehicleUtil.isIdUsed(Integer.parseInt(idField.getText()), MainFrame.data.vehicles)) {
                 JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott ID nem egyedi!", "Hiba!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
