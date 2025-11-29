@@ -82,6 +82,7 @@ public class MainFrame extends JFrame {
         removeButton.setVisible(false);
         navPanel.setBackground(Color.GRAY);
 
+        //Creating the table and setting the model
         JTable table = new JTable(data);
         table.setAutoCreateRowSorter(true);
         table.setFillsViewportHeight(true);
@@ -165,6 +166,9 @@ public class MainFrame extends JFrame {
             }
         });
 
+        /**
+         * Setting up the table columns to have centered content
+         */
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < data.getColumnCount(); ++i) {
@@ -182,6 +186,11 @@ public class MainFrame extends JFrame {
         initFrame();
     }
 
+    /**
+     * 
+     * @param e     - event for the selection change
+     * @param table - the table where the selection was made
+     */
     private void handleSelectionChange(ListSelectionEvent e, JTable table) {
         if (e.getValueIsAdjusting()) // if user is still selecting (event in progress)
             return;
@@ -189,6 +198,12 @@ public class MainFrame extends JFrame {
         removeButton.setVisible(rowIndex > 0);
     }
 
+    /**
+     * Handling the filtering of the table based on the input field or category
+     *
+     * @param cbx - The dropdown menu of the categories
+     * @param tfield - Input field for searching by brand
+     */
     private void handleSearch(JComboBox<String> cbx, JTextField tfield) {
         if (cbx.getSelectedItem().toString().equals("ALL")) {
             data.searchByBrand(tfield.getText().toLowerCase()); // search only by brand, ALL category involved
