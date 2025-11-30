@@ -37,6 +37,10 @@ public class NavButton extends JButton {
         this.setForeground(active ? Color.WHITE : Color.BLACK);
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public NavButton() {
         super();
         initComponent();
