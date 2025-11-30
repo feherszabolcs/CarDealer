@@ -34,6 +34,7 @@ import utils.VehicleUtil.Category;
 
 public class MainFrame extends JFrame {
 
+    // Static package variables used in both frames during the run
     static VehicleData data;
     static NavButton tableViewButton = new NavButton("Tableview", true);
     static NavButton addButton = new NavButton("Add vehicle");
@@ -82,7 +83,7 @@ public class MainFrame extends JFrame {
         removeButton.setVisible(false);
         navPanel.setBackground(Color.GRAY);
 
-        //Creating the table and setting the model
+        // Creating the table and setting the model
         JTable table = new JTable(data);
         table.setAutoCreateRowSorter(true);
         table.setFillsViewportHeight(true);
@@ -201,7 +202,7 @@ public class MainFrame extends JFrame {
     /**
      * Handling the filtering of the table based on the input field or category
      *
-     * @param cbx - The dropdown menu of the categories
+     * @param cbx    - The dropdown menu of the categories
      * @param tfield - Input field for searching by brand
      */
     private void handleSearch(JComboBox<String> cbx, JTextField tfield) {
