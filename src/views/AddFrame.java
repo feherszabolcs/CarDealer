@@ -50,17 +50,18 @@ public class AddFrame extends JFrame {
 
         JPanel mainPanel = new JPanel(new SpringLayout());
         mainPanel.setBackground(Color.GRAY);
-        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture year", "Power" };
 
         Integer[] years = new Integer[100];
         Arrays.setAll(years, g -> LocalDate.now().getYear() - g);
 
         dateDropdown = new DropDown<>(years);
-
         dateDropdown.putClientProperty(FlatClientProperties.STYLE_CLASS, "main");
+
+        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture year", "Power" };
         fields = new Component[] { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
                 powerField };
 
+        // rendering the labales and textfields in the panel
         for (int i = 0; i < labels.length; i++) {
             InputLabel il = new InputLabel(labels[i] + ": ", SwingConstants.LEADING);
             mainPanel.add(il);
@@ -81,6 +82,8 @@ public class AddFrame extends JFrame {
         add(submitPanel, BorderLayout.SOUTH);
 
         submitButton.addActionListener(e -> handleSubmit());
+
+        // setting the active button status when the frame closed
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -89,6 +92,7 @@ public class AddFrame extends JFrame {
             }
         });
 
+        // setting the compactGrid parameters (row, cols, startpos, padding)
         add(mainPanel);
         SpringUtilities.makeCompactGrid(mainPanel,
                 labels.length, 2,
@@ -96,6 +100,9 @@ public class AddFrame extends JFrame {
                 55, 6);
     }
 
+    /**
+     * Handling the add button action with front-end validations
+     */
     private void handleSubmit() {
         for (int i = 0; i < fields.length; i++) {
             if (!validateEmptyFields(fields[i])) {
@@ -141,6 +148,12 @@ public class AddFrame extends JFrame {
         MainFrame.addButton.setActive(false);
     }
 
+    /**
+     * Checking empty value of the component
+     * 
+     * @param comp
+     * @return false if the field is empty
+     */
     private boolean validateEmptyFields(Component comp) {
 
         // first checks if the component textvalue is empty or null
@@ -156,6 +169,13 @@ public class AddFrame extends JFrame {
         return true;
     }
 
+    /**
+     * Regex validation of the textfields
+     *
+     * @param field - to checked
+     * @param type  - expected format (num, string, double)
+     * @return true if the input is valid
+     */
     private boolean validateFieldValue(InputField field, String type) {
         if (type.equals("num"))
             return ((field.getText()).matches("\\d+"));
@@ -165,6 +185,7 @@ public class AddFrame extends JFrame {
         return true;
     }
 
+    // Setting the frame's icon
     private void setIcon() {
         try {
             Image icon = ImageIO.read(new File("lib/img/favico.png"));
