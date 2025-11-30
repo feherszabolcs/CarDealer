@@ -40,6 +40,7 @@ public class AddFrame extends JFrame {
     DropDown<Integer> dateDropdown;
     InputField powerField = new InputField();
     Component[] fields;
+    String[] labels;
 
     private void init() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -57,7 +58,7 @@ public class AddFrame extends JFrame {
         dateDropdown = new DropDown<>(years);
         dateDropdown.putClientProperty(FlatClientProperties.STYLE_CLASS, "main");
 
-        String[] labels = { "ID", "Brand", "Category", "Price", "Description", "Manufacture year", "Power" };
+        labels = new String[] { "ID", "Brand", "Category", "Price", "Description", "Manufacture year", "Power" };
         fields = new Component[] { idField, brandField, categoryDropdown, priceField, descriptionField, dateDropdown,
                 powerField };
 
@@ -106,7 +107,8 @@ public class AddFrame extends JFrame {
     private void handleSubmit() {
         for (int i = 0; i < fields.length; i++) {
             if (!validateEmptyFields(fields[i])) {
-                JOptionPane.showMessageDialog(null, "Egy, vagy több hibás adat!", "Hiba!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "One, or more values are missing!", "Error!",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (!(fields[i] instanceof InputField)) {
@@ -117,17 +119,21 @@ public class AddFrame extends JFrame {
             // checks if the textfields are filled correctly with specified values
 
             if ((i == 0 || i == 3) && !validateFieldValue(tf, "num")) {
-                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott érték nem egész szám!", "Hiba!",
+                JOptionPane.showMessageDialog(null,
+                        tf.getText() + " at " + labels[i] + " - The given values is not an integer.",
+                        "Error!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (i == 0 && VehicleUtil.isIdUsed(Integer.parseInt(idField.getText()), MainFrame.data.vehicles)) {
-                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott ID nem egyedi!", "Hiba!",
+                JOptionPane.showMessageDialog(null,
+                        tf.getText() + " at " + labels[i] + " - The given ID is not unique!", "Error!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (i == 6 && !validateFieldValue(tf, "double")) {
-                JOptionPane.showMessageDialog(null, tf.getText() + "- A megadott érték nem valós szám!", "Hiba!",
+                JOptionPane.showMessageDialog(null,
+                        tf.getText() + " at " + labels[i] + " - The given value is not a double.", "Error!",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -141,7 +147,7 @@ public class AddFrame extends JFrame {
         MainFrame.data.vehicles.add(vehicle);
         MainFrame.data.originalVehicles.add(vehicle);
         MainFrame.data.fireTableDataChanged();
-        JOptionPane.showMessageDialog(null, "Az új jármű sikeresen felvéve!", "Siker!",
+        JOptionPane.showMessageDialog(null, "The new vehicle has been successfuly added.", "Success!",
                 JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
         MainFrame.tableViewButton.setActive(true);
@@ -158,11 +164,11 @@ public class AddFrame extends JFrame {
 
         // first checks if the component textvalue is empty or null
         if (comp instanceof InputField ifield && ifield.getText().isEmpty()) {
-            System.out.println("[HIBA!! ] " + ifield.getText());
+            System.out.println("[ERR!! ] " + ifield.getText());
             return false;
         }
         if (comp instanceof DropDown<?> ddown && ddown.getSelectedItem() == null) {
-            System.out.println("[HIBA!! ] " + ddown.getSelectedItem());
+            System.out.println("[ERR!! ] " + ddown.getSelectedItem());
             return false; // technically not possible
         }
 
