@@ -163,7 +163,7 @@ public class MainFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
                 if (data.vehicles.isEmpty())
                     return;
-                VehicleData.JSONWriter(data.originalVehicles);
+                data.JSONWriter(data.originalVehicles);
             }
         });
 

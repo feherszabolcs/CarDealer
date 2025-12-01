@@ -61,7 +61,7 @@ public class VehicleData extends AbstractTableModel {
      *
      * @return None
      */
-    public static void JSONWriter(List<Vehicle> vehicles) {
+    public void JSONWriter(List<Vehicle> vehicles) {
         JSONArray jsonArray = new JSONArray();
         for (Vehicle vehicle : vehicles) {
             JSONObject jsonObject = new JSONObject();
